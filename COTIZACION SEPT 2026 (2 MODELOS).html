@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cotización de Viaje — Japón 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F5F1E6;
+    --cream-2:#EFE9D9;
+    --ink:#211D18;
+    --indigo:#223A5E;
+    --indigo-2:#2F4C74;
+    --vermillion:#C1440E;
+    --vermillion-soft:#E4633A;
+    --gold:#A9803D;
+    --stone:#7C7367;
+    --line:#DBD2BE;
+    --white:#FFFDF8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Zen Kaku Gothic New', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:60px;
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- HEADER ---------- */
+  header{
+    background:
+      radial-gradient(ellipse 900px 400px at 15% -10%, rgba(193,68,14,0.10), transparent 60%),
+      var(--indigo);
+    color:var(--cream);
+    padding:56px 0 40px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:5px solid var(--vermillion);
+  }
+  header::after{
+    content:"";
+    position:absolute; right:-60px; top:-60px;
+    width:260px; height:260px; border-radius:50%;
+    background:radial-gradient(circle, rgba(193,68,14,0.35), transparent 70%);
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--vermillion-soft); font-weight:600; margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--vermillion-soft); display:inline-block;}
+  h1{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size:clamp(34px, 5.4vw, 52px);
+    line-height:1.08;
+    letter-spacing:-.01em;
+    margin-bottom:10px;
+  }
+  header p.sub{
+    color:#C9D3E0; font-size:15.5px; max-width:520px; line-height:1.55;
+  }
+
+  /* ---------- MODEL SWITCH ---------- */
+  .switcher{
+    display:flex; gap:10px; margin-top:32px; flex-wrap:wrap;
+  }
+  .switch-btn{
+    font-family:'Zen Kaku Gothic New', sans-serif;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.22);
+    color:#DCE3ED;
+    padding:12px 20px;
+    border-radius:3px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:.01em;
+    transition:all .18s ease;
+    text-align:left;
+    flex:1 1 220px;
+  }
+  .switch-btn .n{
+    display:block; font-family:'JetBrains Mono',monospace; font-size:11px;
+    color:var(--vermillion-soft); letter-spacing:.14em; margin-bottom:4px;
+  }
+  .switch-btn.active{
+    background:var(--cream);
+    color:var(--indigo);
+    border-color:var(--cream);
+  }
+  .switch-btn.active .n{color:var(--vermillion);}
+  .switch-btn:hover:not(.active){background:rgba(255,255,255,0.13);}
+
+  /* ---------- ROUTE MAP ---------- */
+  .route-section{padding:36px 0 8px;}
+  .route-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--stone); margin-bottom:18px;
+  }
+  .route-map{
+    display:flex; align-items:flex-start; width:100%;
+    position:relative; padding-bottom:6px;
+    overflow-x:auto;
+  }
+  .route-stop{
+    flex:1; min-width:86px; text-align:center; position:relative; padding-top:12px;
+  }
+  .route-stop::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:var(--line);
+  }
+  .route-stop.first::before{left:50%;}
+  .route-stop.last::before{right:50%;}
+  .route-stop::after{
+    content:""; position:absolute; top:-4px; left:50%; transform:translateX(-50%);
+    width:11px; height:11px; border-radius:50%;
+    background:var(--vermillion); border:2px solid var(--cream);
+    box-shadow:0 0 0 1.5px var(--vermillion);
+  }
+  .route-stop-name{
+    font-family:'Shippori Mincho', serif;
+    font-weight:600; font-size:13.5px; color:var(--indigo);
+    margin-top:6px;
+  }
+
+  /* ---------- CURRENCY TOGGLE ---------- */
+  .controls-bar{
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:16px;
+    padding:28px 0 20px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:8px;
+  }
+  .model-title{
+    font-family:'Shippori Mincho', serif; font-size:20px; font-weight:600; color:var(--indigo);
+  }
+  .model-dates{
+    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--stone); margin-top:3px;
+  }
+  .currency-toggle{
+    display:inline-flex; background:var(--cream-2); border:1px solid var(--line); border-radius:999px; padding:4px;
+  }
+  .currency-toggle button{
+    font-family:'JetBrains Mono', monospace;
+    border:none; background:transparent; padding:9px 20px; border-radius:999px;
+    font-size:13.5px; font-weight:700; letter-spacing:.03em; cursor:pointer; color:var(--stone);
+    transition:all .16s ease;
+  }
+  .currency-toggle button.active{background:var(--indigo); color:var(--cream);}
+
+  /* ---------- DAY ACCORDION ---------- */
+  .day-list{margin-top:18px;}
+  .day-card{
+    border:1px solid var(--line);
+    border-radius:6px;
+    margin-bottom:10px;
+    background:var(--white);
+    overflow:hidden;
+  }
+  .day-head{
+    display:flex; align-items:center; gap:16px;
+    padding:16px 18px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .day-date{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; font-weight:700; color:var(--vermillion);
+    background:#FBEDE4; padding:6px 10px; border-radius:4px; white-space:nowrap;
+  }
+  .day-info{flex:1; min-width:0;}
+  .day-title{font-weight:700; font-size:14.5px; color:var(--ink); line-height:1.35;}
+  .day-count{font-size:12px; color:var(--stone); margin-top:2px;}
+  .day-amount{
+    font-family:'JetBrains Mono', monospace; font-weight:700; font-size:15px; color:var(--indigo);
+    white-space:nowrap;
+  }
+  .chevron{
+    width:18px; height:18px; flex-shrink:0;
+    transition:transform .2s ease;
+    color:var(--stone);
+  }
+  .day-card.open .chevron{transform:rotate(180deg);}
+  .day-body{
+    max-height:0; overflow:hidden; transition:max-height .28s ease;
+    border-top:1px solid transparent;
+  }
+  .day-card.open .day-body{border-top:1px solid var(--line);}
+  .item-row{
+    display:flex; justify-content:space-between; gap:14px;
+    padding:13px 18px; font-size:13.5px;
+    border-bottom:1px dashed var(--line);
+  }
+  .item-row:last-child{border-bottom:none;}
+  .item-main{color:var(--ink); font-weight:500; line-height:1.4;}
+  .item-detail{color:var(--stone); font-size:12px; margin-top:2px;}
+  .item-qty{color:var(--stone); font-size:11.5px; font-family:'JetBrains Mono',monospace; margin-top:3px;}
+  .item-price{
+    font-family:'JetBrains Mono', monospace; font-weight:600; color:var(--indigo);
+    white-space:nowrap; text-align:right; flex-shrink:0;
+  }
+
+  /* ---------- GUIDES ---------- */
+  .section-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--stone); margin:34px 0 14px;
+  }
+
+  /* ---------- SUMMARY ---------- */
+  .summary-card{
+    margin-top:34px;
+    background:var(--indigo);
+    color:var(--cream);
+    border-radius:8px;
+    padding:30px 28px;
+    position:relative;
+    overflow:hidden;
+  }
+  .summary-card::before{
+    content:""; position:absolute; left:-40px; bottom:-60px;
+    width:220px; height:220px; border-radius:50%;
+    background:radial-gradient(circle, rgba(193,68,14,0.28), transparent 70%);
+  }
+  .summary-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:10px 0; font-size:14.5px; color:#C9D3E0;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    position:relative;
+  }
+  .summary-row span:last-child{font-family:'JetBrains Mono', monospace; font-weight:600; color:var(--cream);}
+  .summary-total{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    padding-top:20px; position:relative;
+  }
+  .summary-total .label{
+    font-family:'Shippori Mincho', serif; font-size:16px; font-weight:600; color:var(--cream);
+  }
+  .summary-total .label small{display:block; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:400; font-size:12px; color:#B9C4D4; margin-top:4px;}
+  .summary-total .amount{
+    font-family:'JetBrains Mono', monospace; font-weight:700; font-size:clamp(26px,4vw,36px); color:var(--vermillion-soft);
+  }
+
+  footer{
+    max-width:880px; margin:40px auto 0; padding:0 24px;
+    color:var(--stone); font-size:12.5px; line-height:1.7;
+  }
+  footer .note{
+    border-left:3px solid var(--vermillion); padding-left:14px; margin-bottom:14px;
+  }
+
+  @media (max-width:600px){
+    .route-stop-name{font-size:11px;}
+    .day-head{padding:14px;}
+    .item-row{padding:12px 14px; flex-direction:column; gap:4px;}
+    .item-price{text-align:left;}
+    .controls-bar{align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span>Cotización de viaje · 2026</div>
+    <h1>Japón — Propuesta<br>de itinerario</h1>
+    <p class="sub">Desglose de servicios día por día. Selecciona la ruta y la moneda, y toca cualquier fecha para ver el detalle.</p>
+
+    <div class="switcher" id="model-switcher">
+      <button class="switch-btn" data-model="model1"><span class="n">Modelo 01</span>Ruta Clásica</button>
+      <button class="switch-btn" data-model="model2"><span class="n">Modelo 02</span>Ruta Aventura</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="route-section">
+    <div class="route-label">Recorrido</div>
+    <div class="route-map" id="route-map"></div>
+  </div>
+
+  <div class="controls-bar">
+    <div>
+      <div class="model-title" id="model-title">Ruta Clásica</div>
+      <div class="model-dates" id="model-dates">— 2026</div>
+    </div>
+    <div class="currency-toggle" id="currency-toggle">
+      <button data-cur="mxn" class="active">MXN $</button>
+      <button data-cur="usd">USD $</button>
+    </div>
+  </div>
+
+  <div class="section-label">Itinerario y servicios por día</div>
+  <div class="day-list" id="day-list"></div>
+
+  <div class="section-label">Guías especializados de habla hispana</div>
+  <div class="day-list" id="guides-list"></div>
+
+  <div class="summary-card">
+    <div class="summary-row"><span>Servicios, hospedaje y transporte</span><span id="sum-services">—</span></div>
+    <div class="summary-row"><span>Guías especializados de habla hispana</span><span id="sum-guides">—</span></div>
+    <div class="summary-total">
+      <div class="label">Total por persona<small>Incluye coordinación y operación del viaje</small></div>
+      <div class="amount" id="sum-total">—</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="note">Cotización sujeta a disponibilidad y tipo de cambio al momento de la confirmación. Los precios están calculados por persona en habitación doble (twin).</div>
+  <div>Japón 2026 · Preparado para revisión del cliente</div>
+</footer>
+
+<script id="trip-data" type="application/json">
+{"model1": {"title": "Ruta Clásica", "route": ["Tokio", "Hakone", "Kyoto", "Nara", "Osaka", "Hiroshima"], "date_range": "07 Sep – 23 Sep 2026", "days": [{"date": "07 Sep", "items": [{"date": "07 Sep", "main": "Traslado Aeropuerto Narita → Hotel", "detail": "Vehículo Alfard con conductor de habla inglesa", "qty": 1, "unit_mxn": 3219, "sub_mxn": 3219, "unit_usd": 184.8, "sub_usd": 184.8}, {"date": "07 Sep", "main": "Hotel Tokio - Sunshine City Prince Hotel (Twin 20.7m², desayuno incluido)", "detail": null, "qty": 2, "unit_mxn": 2832.72, "sub_mxn": 5665.44, "unit_usd": 162.62, "sub_usd": 325.25}]}, {"date": "08 Sep", "items": [{"date": "08 Sep", "main": "Tour completo Tokio (Asakusa, Templo Senso-ji, Santuario Meiji, Harajuku, Shibuya) + Pase Metro 1 día", "detail": null, "qty": 3, "unit_mxn": 225.33, "sub_mxn": 675.99, "unit_usd": 12.94, "sub_usd": 38.81}, {"date": "08 Sep", "main": "Hotel Tokio - Sunshine City Prince Hotel (Twin 20.7m², desayuno incluido)", "detail": null, "qty": 2, "unit_mxn": 3025.86, "sub_mxn": 6051.72, "unit_usd": 173.71, "sub_usd": 347.42}]}, {"date": "09 Sep", "items": [{"date": "09 Sep", "main": "Vehículo Alfard 10 horas (Tour Hakone y Monte Fuji) *Entradas no incluidas", "detail": null, "qty": 1, "unit_mxn": 6974.5, "sub_mxn": 6974.5, "unit_usd": 400.4, "sub_usd": 400.4}, {"date": "09 Sep", "main": "Hotel Tokio - Sunshine City Prince Hotel (Twin 20.7m², desayuno incluido)", "detail": null, "qty": 2, "unit_mxn": 3025.86, "sub_mxn": 6051.72, "unit_usd": 173.71, "sub_usd": 347.42}]}, {"date": "10 Sep", "items": [{"date": "10 Sep", "main": "Hotel Tokio - Sunshine City Prince Hotel (Twin 20.7m², desayuno incluido)", "detail": null, "qty": 2, "unit_mxn": 3025.86, "sub_mxn": 6051.72, "unit_usd": 173.71, "sub_usd": 347.42}]}, {"date": "11 Sep", "items": [{"date": "11 Sep", "main": "Traslado Hotel → Estación Tokio", "detail": "Vehículo Alfard con conductor de habla inglesa", "qty": 1, "unit_mxn": 1824.1, "sub_mxn": 1824.1, "unit_usd": 104.72, "sub_usd": 104.72}, {"date": "11 Sep", "main": "Tren Bala Tokio → Kyoto (Clase ordinaria, asiento reservado)", "detail": null, "qty": 2, "unit_mxn": 3040.88, "sub_mxn": 6081.76, "unit_usd": 174.57, "sub_usd": 349.15}, {"date": "11 Sep", "main": "Hotel Kyoto - Hotel Keihan Kyoto Ekiminami (Twin 20m², 1 min a pie estación)", "detail": null, "qty": 2, "unit_mxn": 2124.54, "sub_mxn": 4249.08, "unit_usd": 121.97, "sub_usd": 243.94}]}, {"date": "12 Sep", "items": [{"date": "12 Sep", "main": "Vehículo Alfard 8 horas - Tour Kyoto", "detail": null, "qty": 1, "unit_mxn": 7511, "sub_mxn": 7511, "unit_usd": 431.2, "sub_usd": 431.2}, {"date": "12 Sep", "main": "Entrada Templo Kinkaku-ji (Pabellón Dorado)", "detail": null, "qty": 3, "unit_mxn": 160.95, "sub_mxn": 482.85, "unit_usd": 9.24, "sub_usd": 27.72}, {"date": "12 Sep", "main": "Hotel Kyoto - Hotel Keihan Kyoto Ekiminami (Twin 20m²)", "detail": null, "qty": 2, "unit_mxn": 2628.85, "sub_mxn": 5257.7, "unit_usd": 150.92, "sub_usd": 301.84}]}, {"date": "13 Sep", "items": [{"date": "13 Sep", "main": "Vehículo Alfard 8 horas - Tour Nara", "detail": null, "qty": 1, "unit_mxn": 7511, "sub_mxn": 7511, "unit_usd": 431.2, "sub_usd": 431.2}, {"date": "13 Sep", "main": "Entrada Templo Todai-ji", "detail": null, "qty": 3, "unit_mxn": 257.52, "sub_mxn": 772.56, "unit_usd": 14.78, "sub_usd": 44.35}, {"date": "13 Sep", "main": "Hotel Kyoto - Hotel Keihan Kyoto Ekiminami (Twin 20m²)", "detail": null, "qty": 2, "unit_mxn": 2296.22, "sub_mxn": 4592.44, "unit_usd": 131.82, "sub_usd": 263.65}]}, {"date": "14 Sep", "items": [{"date": "14 Sep", "main": "Hotel Kyoto - Hotel Keihan Kyoto Ekiminami (Twin 20m²)", "detail": null, "qty": 2, "unit_mxn": 2156.73, "sub_mxn": 4313.46, "unit_usd": 123.82, "sub_usd": 247.63}]}, {"date": "15 Sep", "items": [{"date": "15 Sep", "main": "Vehículo Alfard 10 horas - Tour Osaka", "detail": null, "qty": 1, "unit_mxn": 7511, "sub_mxn": 7511, "unit_usd": 431.2, "sub_usd": 431.2}, {"date": "15 Sep", "main": "Entrada Castillo de Osaka", "detail": null, "qty": 3, "unit_mxn": 386.28, "sub_mxn": 1158.84, "unit_usd": 22.18, "sub_usd": 66.53}, {"date": "15 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 2156.73, "sub_mxn": 4313.46, "unit_usd": 123.82, "sub_usd": 247.63}]}, {"date": "16 Sep", "items": [{"date": "16 Sep", "main": "Traslado Hotel Osaka ↔ Estación Shin-Osaka", "detail": "Taxi ida y vuelta", "qty": 1, "unit_mxn": 965.7, "sub_mxn": 965.7, "unit_usd": 55.44, "sub_usd": 55.44}, {"date": "16 Sep", "main": "Tren Bala Osaka ↔ Hiroshima (Clase ordinaria, ida y vuelta)", "detail": null, "qty": 3, "unit_mxn": 6920.85, "sub_mxn": 20762.55, "unit_usd": 397.32, "sub_usd": 1191.96}, {"date": "16 Sep", "main": "Tren JR ordinario Hiroshima ↔ Miyajimaguchi (ida y vuelta)", "detail": null, "qty": 3, "unit_mxn": 270.4, "sub_mxn": 811.19, "unit_usd": 15.52, "sub_usd": 46.57}, {"date": "16 Sep", "main": "Ferry Hiroshima → Miyajima ida y vuelta", "detail": null, "qty": 3, "unit_mxn": 128.76, "sub_mxn": 386.28, "unit_usd": 7.39, "sub_usd": 22.18}, {"date": "16 Sep", "main": "Impuesto de acceso a Miyajima", "detail": null, "qty": 3, "unit_mxn": 32.19, "sub_mxn": 96.57, "unit_usd": 1.85, "sub_usd": 5.54}, {"date": "16 Sep", "main": "Tour Miyajima - Santuario Itsukushima", "detail": null, "qty": 3, "unit_mxn": 96.57, "sub_mxn": 289.71, "unit_usd": 5.54, "sub_usd": 16.63}, {"date": "16 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 2489.36, "sub_mxn": 4978.72, "unit_usd": 142.91, "sub_usd": 285.82}]}, {"date": "17 Sep", "items": [{"date": "17 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 2489.36, "sub_mxn": 4978.72, "unit_usd": 142.91, "sub_usd": 285.82}]}, {"date": "18 Sep", "items": [{"date": "18 Sep", "main": "Entrada Universal Studios Japan *Transporte al parque no incluido", "detail": null, "qty": 2, "unit_mxn": 2124.54, "sub_mxn": 4249.08, "unit_usd": 121.97, "sub_usd": 243.94}, {"date": "18 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 2489.36, "sub_mxn": 4978.72, "unit_usd": 142.91, "sub_usd": 285.82}]}, {"date": "19 Sep", "items": [{"date": "19 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 4721.2, "sub_mxn": 9442.4, "unit_usd": 271.04, "sub_usd": 542.08}]}, {"date": "20 Sep", "items": [{"date": "20 Sep", "main": "Pase Osaka 2 días (recomendado para 20-21 Sep)", "detail": null, "qty": 2, "unit_mxn": 1073, "sub_mxn": 2146, "unit_usd": 61.6, "sub_usd": 123.2}, {"date": "20 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 4721.2, "sub_mxn": 9442.4, "unit_usd": 271.04, "sub_usd": 542.08}]}, {"date": "21 Sep", "items": [{"date": "21 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 4206.16, "sub_mxn": 8412.32, "unit_usd": 241.47, "sub_usd": 482.94}]}, {"date": "22 Sep", "items": [{"date": "22 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 3068.78, "sub_mxn": 6137.56, "unit_usd": 176.18, "sub_usd": 352.35}]}, {"date": "23 Sep", "items": [{"date": "23 Sep", "main": "Traslado Hotel Osaka → Aeropuerto Kansai", "detail": "Vehículo Alfard con conductor de habla inglesa", "qty": 1, "unit_mxn": 3219, "sub_mxn": 3219, "unit_usd": 184.8, "sub_usd": 184.8}]}], "guides": [{"date": "08 Sep", "main": "Guía de habla hispana", "detail": null, "qty": 1, "unit_mxn": 5043.1, "sub_mxn": 5043.1, "unit_usd": 289.52, "sub_usd": 289.52}, {"date": "09 Sep", "main": "Guía de habla hispana", "detail": null, "qty": 1, "unit_mxn": 5043.1, "sub_mxn": 5043.1, "unit_usd": 289.52, "sub_usd": 289.52}, {"date": "12 Sep", "main": "Guía de habla hispana", "detail": null, "qty": 1, "unit_mxn": 5043.1, "sub_mxn": 5043.1, "unit_usd": 289.52, "sub_usd": 289.52}, {"date": "13 Sep", "main": "Guía de habla hispana", "detail": null, "qty": 1, "unit_mxn": 5043.1, "sub_mxn": 5043.1, "unit_usd": 289.52, "sub_usd": 289.52}, {"date": "15 Sep", "main": "Guía de habla hispana", "detail": null, "qty": 1, "unit_mxn": 5043.1, "sub_mxn": 5043.1, "unit_usd": 289.52, "sub_usd": 289.52}, {"date": "16 Sep", "main": "Guía de habla hispana", "detail": null, "qty": 1, "unit_mxn": 5043.1, "sub_mxn": 5043.1, "unit_usd": 289.52, "sub_usd": 289.52}], "subtotal_services": {"mxn": 171566.26, "usd": 9849.47}, "subtotal_guides": {"mxn": 30258.6, "usd": 1737.12}, "final_total": {"mxn": 242189.83, "usd": 13903.91}}, "model2": {"title": "Ruta Aventura", "route": ["Tokio", "Kamakura", "Kyoto", "Uji / Fushimi", "Osaka", "Kobe"], "date_range": "08 Sep – 23 Sep 2026", "days": [{"date": "08 Sep", "items": [{"date": "08 Sep", "main": "Traslado Aeropuerto Narita → Hotel", "detail": "Vehículo Alfard con conductor de habla inglesa", "qty": 1, "unit_mxn": 3219, "sub_mxn": 3219, "unit_usd": 184.8, "sub_usd": 184.8}, {"date": "08 Sep", "main": "Hotel Tokio - Sunshine City Prince Hotel (Twin 20.7m², desayuno incluido)", "detail": null, "qty": 2, "unit_mxn": 3025.86, "sub_mxn": 6051.72, "unit_usd": 173.71, "sub_usd": 347.42}]}, {"date": "09 Sep", "items": [{"date": "09 Sep", "main": "Tour completo Tokio (Asakusa, Templo Senso-ji, Santuario Meiji, Harajuku, Shibuya) + Pase Metro 1 día", "detail": null, "qty": 3, "unit_mxn": 225.33, "sub_mxn": 675.99, "unit_usd": 12.94, "sub_usd": 38.81}, {"date": "09 Sep", "main": "Entrada Torre de Tokio", "detail": null, "qty": 3, "unit_mxn": 482.85, "sub_mxn": 1448.55, "unit_usd": 27.72, "sub_usd": 83.16}, {"date": "09 Sep", "main": "Hotel Tokio - Sunshine City Prince Hotel (Twin 20.7m², desayuno incluido)", "detail": null, "qty": 2, "unit_mxn": 3025.86, "sub_mxn": 6051.72, "unit_usd": 173.71, "sub_usd": 347.42}]}, {"date": "10 Sep", "items": [{"date": "10 Sep", "main": "Vehículo Alfard 10 horas (Kamakura, Santuario Tsurugaoka Hachimangu, Yokohama Minato Mirai, Almacenes Ladrillo Rojo)", "detail": null, "qty": 1, "unit_mxn": 6974.5, "sub_mxn": 6974.5, "unit_usd": 400.4, "sub_usd": 400.4}, {"date": "10 Sep", "main": "Entrada Gran Buda de Kamakura", "detail": null, "qty": 3, "unit_mxn": 96.57, "sub_mxn": 289.71, "unit_usd": 5.54, "sub_usd": 16.63}, {"date": "10 Sep", "main": "Hotel Tokio - Sunshine City Prince Hotel (Twin 20.7m², desayuno incluido)", "detail": null, "qty": 2, "unit_mxn": 3025.86, "sub_mxn": 6051.72, "unit_usd": 173.71, "sub_usd": 347.42}]}, {"date": "11 Sep", "items": [{"date": "11 Sep", "main": "Hotel Tokio - Sunshine City Prince Hotel (Twin 20.7m², desayuno incluido)", "detail": null, "qty": 2, "unit_mxn": 3025.86, "sub_mxn": 6051.72, "unit_usd": 173.71, "sub_usd": 347.42}]}, {"date": "12 Sep", "items": [{"date": "12 Sep", "main": "Traslado Hotel → Estación Tokio", "detail": "Vehículo Alfard con conductor de habla inglesa", "qty": 1, "unit_mxn": 1824.1, "sub_mxn": 1824.1, "unit_usd": 104.72, "sub_usd": 104.72}, {"date": "12 Sep", "main": "Tren Bala Tokio → Kyoto (Clase ordinaria, asiento reservado)", "detail": null, "qty": 2, "unit_mxn": 3040.88, "sub_mxn": 6081.76, "unit_usd": 174.57, "sub_usd": 349.15}, {"date": "12 Sep", "main": "Hotel Kyoto - Hotel Keihan Kyoto Ekiminami (Twin 20m², 1 min a pie estación)", "detail": null, "qty": 2, "unit_mxn": 2628.85, "sub_mxn": 5257.7, "unit_usd": 150.92, "sub_usd": 301.84}]}, {"date": "13 Sep", "items": [{"date": "13 Sep", "main": "Vehículo Alfard 8 horas - Tour Kyoto completo", "detail": null, "qty": 1, "unit_mxn": 7511, "sub_mxn": 7511, "unit_usd": 431.2, "sub_usd": 431.2}, {"date": "13 Sep", "main": "Entrada Templo Kiyomizu-dera", "detail": null, "qty": 3, "unit_mxn": 160.95, "sub_mxn": 482.85, "unit_usd": 9.24, "sub_usd": 27.72}, {"date": "13 Sep", "main": "Hotel Kyoto - Hotel Keihan Kyoto Ekiminami (Twin 20m²)", "detail": null, "qty": 2, "unit_mxn": 2296.22, "sub_mxn": 4592.44, "unit_usd": 131.82, "sub_usd": 263.65}]}, {"date": "14 Sep", "items": [{"date": "14 Sep", "main": "Vehículo Alfard 8 horas - Tour Uji y Fushimi completo", "detail": null, "qty": 1, "unit_mxn": 7511, "sub_mxn": 7511, "unit_usd": 431.2, "sub_usd": 431.2}, {"date": "14 Sep", "main": "Hotel Kyoto - Hotel Keihan Kyoto Ekiminami (Twin 20m²)", "detail": null, "qty": 2, "unit_mxn": 2156.73, "sub_mxn": 4313.46, "unit_usd": 123.82, "sub_usd": 247.63}]}, {"date": "15 Sep", "items": [{"date": "15 Sep", "main": "Hotel Kyoto - Hotel Keihan Kyoto Ekiminami (Twin 20m²)", "detail": null, "qty": 2, "unit_mxn": 2156.73, "sub_mxn": 4313.46, "unit_usd": 123.82, "sub_usd": 247.63}]}, {"date": "16 Sep", "items": [{"date": "16 Sep", "main": "Vehículo Alfard 10 horas - Tour Osaka completo", "detail": null, "qty": 1, "unit_mxn": 7511, "sub_mxn": 7511, "unit_usd": 431.2, "sub_usd": 431.2}, {"date": "16 Sep", "main": "Entrada Castillo de Osaka", "detail": null, "qty": 3, "unit_mxn": 386.28, "sub_mxn": 1158.84, "unit_usd": 22.18, "sub_usd": 66.53}, {"date": "16 Sep", "main": "Entrada Torre Tsutenkaku", "detail": null, "qty": 3, "unit_mxn": 482.85, "sub_mxn": 1448.55, "unit_usd": 27.72, "sub_usd": 83.16}, {"date": "16 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 3, "unit_mxn": 3734.04, "sub_mxn": 11202.12, "unit_usd": 214.37, "sub_usd": 643.1}]}, {"date": "17 Sep", "items": [{"date": "17 Sep", "main": "Vehículo Alfard 10 horas - Tour Kobe completo", "detail": null, "qty": 1, "unit_mxn": 7511, "sub_mxn": 7511, "unit_usd": 431.2, "sub_usd": 431.2}, {"date": "17 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 2489.36, "sub_mxn": 4978.72, "unit_usd": 142.91, "sub_usd": 285.82}]}, {"date": "18 Sep", "items": [{"date": "18 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 2489.36, "sub_mxn": 4978.72, "unit_usd": 142.91, "sub_usd": 285.82}]}, {"date": "19 Sep", "items": [{"date": "19 Sep", "main": "Entrada Universal Studios Japan *Transporte al parque no incluido", "detail": null, "qty": 2, "unit_mxn": 2339.14, "sub_mxn": 4678.28, "unit_usd": 134.29, "sub_usd": 268.58}, {"date": "19 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 4721.2, "sub_mxn": 9442.4, "unit_usd": 271.04, "sub_usd": 542.08}]}, {"date": "20 Sep", "items": [{"date": "20 Sep", "main": "Pase Osaka 2 días (recomendado para 20-21 Sep)", "detail": null, "qty": 2, "unit_mxn": 1073, "sub_mxn": 2146, "unit_usd": 61.6, "sub_usd": 123.2}, {"date": "20 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 4721.2, "sub_mxn": 9442.4, "unit_usd": 271.04, "sub_usd": 542.08}]}, {"date": "21 Sep", "items": [{"date": "21 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 4206.16, "sub_mxn": 8412.32, "unit_usd": 241.47, "sub_usd": 482.94}]}, {"date": "22 Sep", "items": [{"date": "22 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 3068.78, "sub_mxn": 6137.56, "unit_usd": 176.18, "sub_usd": 352.35}]}, {"date": "23 Sep", "items": [{"date": "23 Sep", "main": "Hotel Osaka - DoubleTree by Hilton Osaka Castle (Twin 28m²)", "detail": null, "qty": 2, "unit_mxn": 3068.78, "sub_mxn": 6137.56, "unit_usd": 176.18, "sub_usd": 352.35}, {"date": "23 Sep", "main": "Traslado Hotel Osaka → Aeropuerto Kansai", "detail": "Vehículo Alfard con conductor de habla inglesa", "qty": 1, "unit_mxn": 3219, "sub_mxn": 3219, "unit_usd": 184.8, "sub_usd": 184.8}]}], "guides": [{"date": "09 Sep", "main": "Guía de habla hispana", "detail": null, "qty": 1, "unit_mxn": 5043.1, "sub_mxn": 5043.1, "unit_usd": 289.52, "sub_usd": 289.52}, {"date": "10 Sep", "main": "Guía de habla hispana", "detail": null, "qty": 1, "unit_mxn": 5043.1, "sub_mxn": 5043.1, "unit_usd": 289.52, "sub_usd": 289.52}, {"date": "13 Sep", "main": "Guía de habla hispana", "detail": null, "qty": 1, "unit_mxn": 5043.1, "sub_mxn": 5043.1, "unit_usd": 289.52, "sub_usd": 289.52}, {"date": "14 Sep", "main": "Guía de habla hispana", "detail": null, "qty": 1, "unit_mxn": 5043.1, "sub_mxn": 5043.1, "unit_usd": 289.52, "sub_usd": 289.52}, {"date": "16 Sep", "main": "Guía de habla hispana", "detail": null, "qty": 1, "unit_mxn": 5043.1, "sub_mxn": 5043.1, "unit_usd": 289.52, "sub_usd": 289.52}, {"date": "17 Sep", "main": "Guía de habla hispana", "detail": null, "qty": 1, "unit_mxn": 5043.1, "sub_mxn": 5043.1, "unit_usd": 289.52, "sub_usd": 289.52}], "subtotal_services": {"mxn": 167106.87, "usd": 9593.46}, "subtotal_guides": {"mxn": 30258.6, "usd": 1737.12}, "final_total": {"mxn": 236838.57, "usd": 13596.7}}}
+</script>
+
+<script>
+const DATA = JSON.parse(document.getElementById('trip-data').textContent);
+
+let currentModel = 'model1';
+let currentCurrency = 'mxn';
+
+const fmt = (n, cur) => {
+  if (n === null || n === undefined) return '—';
+  const symbol = cur === 'usd' ? 'US$' : '$';
+  return symbol + Number(n).toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2});
+};
+
+function renderRoute(model){
+  const el = document.getElementById('route-map');
+  const stops = model.route;
+  el.innerHTML = stops.map((s,i) => `
+    <div class="route-stop ${i===0?'first':''} ${i===stops.length-1?'last':''}">
+      <div class="route-stop-name">${s}</div>
+    </div>
+  `).join('');
+}
+
+function dayTotal(day, cur){
+  return day.items.reduce((sum, it) => sum + (cur==='usd' ? it.sub_usd : it.sub_mxn), 0);
+}
+
+function renderDays(model, cur){
+  const list = document.getElementById('day-list');
+  list.innerHTML = model.days.map((day, idx) => {
+    const total = dayTotal(day, cur);
+    const headline = day.items[0].main;
+    return `
+    <div class="day-card" data-idx="${idx}">
+      <div class="day-head" onclick="toggleDay(this)">
+        <div class="day-date">${day.date}</div>
+        <div class="day-info">
+          <div class="day-title">${headline}</div>
+          <div class="day-count">${day.items.length} servicio${day.items.length>1?'s':''}</div>
+        </div>
+        <div class="day-amount">${fmt(total, cur)}</div>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="day-body">
+        ${day.items.map(it => `
+          <div class="item-row">
+            <div>
+              <div class="item-main">${it.main}</div>
+              ${it.detail ? `<div class="item-detail">${it.detail}</div>` : ''}
+              <div class="item-qty">Cant. ${it.qty} × ${fmt(cur==='usd'?it.unit_usd:it.unit_mxn, cur)}</div>
+            </div>
+            <div class="item-price">${fmt(cur==='usd'?it.sub_usd:it.sub_mxn, cur)}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderGuides(model, cur){
+  const list = document.getElementById('guides-list');
+  const total = model.guides.reduce((s,it)=> s + (cur==='usd'?it.sub_usd:it.sub_mxn), 0);
+  list.innerHTML = `
+    <div class="day-card" data-idx="guides">
+      <div class="day-head" onclick="toggleDay(this)">
+        <div class="day-date">×${model.guides.length}</div>
+        <div class="day-info">
+          <div class="day-title">Guía de habla hispana en tours seleccionados</div>
+          <div class="day-count">${model.guides.length} día${model.guides.length>1?'s':''} con guía</div>
+        </div>
+        <div class="day-amount">${fmt(total, cur)}</div>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="day-body">
+        ${model.guides.map(it => `
+          <div class="item-row">
+            <div>
+              <div class="item-main">${it.main} — ${it.date}</div>
+            </div>
+            <div class="item-price">${fmt(cur==='usd'?it.sub_usd:it.sub_mxn, cur)}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderSummary(model, cur){
+  document.getElementById('sum-services').textContent = fmt(cur==='usd'?model.subtotal_services.usd:model.subtotal_services.mxn, cur);
+  document.getElementById('sum-guides').textContent = fmt(cur==='usd'?model.subtotal_guides.usd:model.subtotal_guides.mxn, cur);
+  document.getElementById('sum-total').textContent = fmt(cur==='usd'?model.final_total.usd:model.final_total.mxn, cur);
+}
+
+function toggleDay(headEl){
+  const card = headEl.parentElement;
+  const body = card.querySelector('.day-body');
+  const isOpen = card.classList.contains('open');
+  if(isOpen){
+    body.style.maxHeight = null;
+    card.classList.remove('open');
+  } else {
+    card.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+  }
+}
+
+function render(){
+  const model = DATA[currentModel];
+  document.getElementById('model-title').textContent = model.title;
+  document.getElementById('model-dates').textContent = model.date_range;
+  renderRoute(model);
+  renderDays(model, currentCurrency);
+  renderGuides(model, currentCurrency);
+  renderSummary(model, currentCurrency);
+
+  document.querySelectorAll('.switch-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.model === currentModel);
+  });
+  document.querySelectorAll('#currency-toggle button').forEach(b => {
+    b.classList.toggle('active', b.dataset.cur === currentCurrency);
+  });
+}
+
+document.getElementById('model-switcher').addEventListener('click', (e) => {
+  const btn = e.target.closest('.switch-btn');
+  if(!btn) return;
+  currentModel = btn.dataset.model;
+  render();
+});
+
+document.getElementById('currency-toggle').addEventListener('click', (e) => {
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  currentCurrency = btn.dataset.cur;
+  render();
+});
+
+render();
+</script>
+
+</body>
+</html>
