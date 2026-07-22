@@ -9,17 +9,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#F5F1E6;
-    --cream-2:#EFE9D9;
-    --ink:#211D18;
-    --indigo:#223A5E;
-    --indigo-2:#2F4C74;
-    --vermillion:#C1440E;
-    --vermillion-soft:#E4633A;
-    --gold:#A9803D;
-    --stone:#7C7367;
-    --line:#DBD2BE;
-    --white:#FFFDF8;
+    --cream:#F6EFDF;
+    --cream-2:#EEE3C8;
+    --ink:#211A15;
+    --indigo:#16283F;
+    --indigo-2:#203B5A;
+    --vermillion:#B23A2E;
+    --vermillion-soft:#D6604A;
+    --sakura:#E3A9AE;
+    --gold:#AD8A3F;
+    --stone:#79705F;
+    --line:#DCCBA0;
+    --white:#FFFCF3;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -35,19 +36,18 @@
   /* ---------- HEADER ---------- */
   header{
     background:
-      radial-gradient(ellipse 900px 400px at 15% -10%, rgba(193,68,14,0.10), transparent 60%),
+      radial-gradient(ellipse 900px 400px at 15% -10%, rgba(178,58,46,0.12), transparent 60%),
       var(--indigo);
     color:var(--cream);
     padding:56px 0 40px;
     position:relative;
     overflow:hidden;
-    border-bottom:5px solid var(--vermillion);
   }
   header::after{
     content:"";
     position:absolute; right:-60px; top:-60px;
     width:260px; height:260px; border-radius:50%;
-    background:radial-gradient(circle, rgba(193,68,14,0.35), transparent 70%);
+    background:radial-gradient(circle, rgba(178,58,46,0.35), transparent 70%);
   }
   .eyebrow{
     font-family:'JetBrains Mono', monospace;
@@ -56,6 +56,10 @@
     display:flex; align-items:center; gap:10px;
   }
   .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--vermillion-soft); display:inline-block;}
+  .eyebrow .kanji{
+    font-family:'Shippori Mincho', serif; color:var(--sakura); font-size:14px; letter-spacing:.1em;
+    border-left:1px solid rgba(255,255,255,0.25); padding-left:10px; margin-left:2px;
+  }
   h1{
     font-family:'Shippori Mincho', serif;
     font-weight:700;
@@ -66,6 +70,17 @@
   }
   header p.sub{
     color:#C9D3E0; font-size:15.5px; max-width:520px; line-height:1.55;
+  }
+
+  /* ---------- SEIGAIHA WAVE DIVIDER ---------- */
+  .wave-divider{
+    height:22px;
+    width:100%;
+    background-color:var(--vermillion);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='30' viewBox='0 0 60 30'%3E%3Cg fill='none' stroke='%23F6EFDF' stroke-width='1.6' opacity='0.55'%3E%3Cpath d='M0 30a15 15 0 0 1 30 0'/%3E%3Cpath d='M30 30a15 15 0 0 1 30 0'/%3E%3Cpath d='M-15 30a15 15 0 0 1 30 0'/%3E%3Cpath d='M0 24a9 9 0 0 1 18 0'/%3E%3Cpath d='M18 24a9 9 0 0 1 18 0'/%3E%3Cpath d='M36 24a9 9 0 0 1 18 0'/%3E%3Cpath d='M-18 24a9 9 0 0 1 18 0'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat:repeat-x;
+    background-size:60px 30px;
+    background-position:bottom;
   }
 
   /* ---------- MODEL SWITCH ---------- */
@@ -229,7 +244,7 @@
   .summary-card::before{
     content:""; position:absolute; left:-40px; bottom:-60px;
     width:220px; height:220px; border-radius:50%;
-    background:radial-gradient(circle, rgba(193,68,14,0.28), transparent 70%);
+    background:radial-gradient(circle, rgba(178,58,46,0.28), transparent 70%);
   }
   .summary-row{
     display:flex; justify-content:space-between; align-items:baseline;
@@ -246,8 +261,20 @@
     font-family:'Shippori Mincho', serif; font-size:16px; font-weight:600; color:var(--cream);
   }
   .summary-total .label small{display:block; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:400; font-size:12px; color:#B9C4D4; margin-top:4px;}
+  .summary-total .amount-wrap{display:flex; align-items:center; gap:14px;}
   .summary-total .amount{
     font-family:'JetBrains Mono', monospace; font-weight:700; font-size:clamp(26px,4vw,36px); color:var(--vermillion-soft);
+  }
+  .hanko{
+    width:46px; height:46px; flex-shrink:0; border-radius:6px;
+    background:var(--vermillion);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 1.5px rgba(246,239,223,0.5), 0 4px 10px rgba(0,0,0,0.25);
+    transform:rotate(-4deg);
+  }
+  .hanko span{
+    font-family:'Shippori Mincho', serif; font-weight:700; color:var(--cream);
+    font-size:17px; line-height:1; writing-mode:vertical-rl;
   }
 
   footer{
@@ -271,7 +298,7 @@
 
 <header>
   <div class="wrap">
-    <div class="eyebrow"><span class="dot"></span>Cotización de viaje · 2026</div>
+    <div class="eyebrow"><span class="dot"></span>Cotización de viaje · 2026<span class="kanji">日本 旅行</span></div>
     <h1>Japón — Propuesta<br>de itinerario</h1>
     <p class="sub">Desglose de servicios día por día. Selecciona la ruta y la moneda, y toca cualquier fecha para ver el detalle.</p>
 
@@ -281,6 +308,7 @@
     </div>
   </div>
 </header>
+<div class="wave-divider"></div>
 
 <div class="wrap">
   <div class="route-section">
@@ -309,14 +337,17 @@
     <div class="summary-row"><span>Servicios, hospedaje y transporte</span><span id="sum-services">—</span></div>
     <div class="summary-row"><span>Guías especializados de habla hispana</span><span id="sum-guides">—</span></div>
     <div class="summary-total">
-      <div class="label">Total por persona<small>Incluye coordinación y operación del viaje</small></div>
-      <div class="amount" id="sum-total">—</div>
+      <div class="label">Total del tour<small>Incluye coordinación y operación del viaje</small></div>
+      <div class="amount-wrap">
+        <div class="hanko"><span>日本</span></div>
+        <div class="amount" id="sum-total">—</div>
+      </div>
     </div>
   </div>
 </div>
 
 <footer>
-  <div class="note">Cotización sujeta a disponibilidad y tipo de cambio al momento de la confirmación. Los precios están calculados por persona en habitación doble (twin).</div>
+  <div class="note">Cotización sujeta a disponibilidad y tipo de cambio al momento de la confirmación. Los precios consideran hospedaje en habitación doble (twin).</div>
   <div>Japón 2026 · Preparado para revisión del cliente</div>
 </footer>
 
